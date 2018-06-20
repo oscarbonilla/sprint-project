@@ -1,0 +1,38 @@
+[
+	{
+		"name": "Very Short",
+		"duration": "5s",
+		"status": "Completed",
+		"progress": "15%",
+		"description": "New Sprint Test",
+		"notify": true,
+		"user": "email@cgi.com",
+		"createdAt": "2018-06-20",
+		"startedAt": "13:25:50",
+		"finishedAt": "13:25:55"
+	},
+	{
+		"name": "Very Short 1",
+		"duration": "10s",
+		"status": "Completed",
+		"progress": "25%",
+		"description": "New Sprint Test",
+		"notify": true,
+		"user": "test@cgi.com",
+		"createdAt": "2018-06-20",
+		"startedAt": "13:25:50",
+		"finishedAt": "13:25:55"
+	},
+	{
+		"name": "Very Short 3333",
+		"duration": "50s",
+		"status": "Cancelled (at 16%)",
+		"progress": "16%",
+		"description": "New Sprint Test 111111",
+		"notify": true,
+		"user": "test22@cgi.com",
+		"createdAt": "2018-06-20",
+		"startedAt": "13:25:50",
+		"finishedAt": "13:25:55"
+	}
+]

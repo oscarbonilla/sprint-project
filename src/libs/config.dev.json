@@ -1,0 +1,14 @@
+{
+    "appConfig": {
+        "host": "localhost",        
+        "port": 3000
+    },
+    "databaseConfig": {
+        "host": "localhost",
+        "database": "sprint-project-db",
+        "port": 27017
+    },
+    "apiRoutesConfig": {
+        "api" : "/api"
+    }
+}

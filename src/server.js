@@ -1,20 +1,29 @@
 const express = require('express');
 const morgan = require('morgan');
-const mongoClient = require('mongodb').MongoClient;
+const port = 3000;
 const app = express();
+//const bodyParser = require('body-parser');
 
-const port = 5000;
 
-
-const URL = 'mongodb://localhost:27017';
+//Db
+const  { mongoose } = require('./libs/database');
 
 //Settings
-app.set('port', process.env.PORT || port);
+const appConfig = require('./libs/configLoader').appConfig;
+app.set('port', process.env.PORT || appConfig.port);
 
+
+//Routes
+app.use(require('./routes/sprint-routes'));
 
 //Middlewares
 app.use(morgan('dev'));
-app.use(express.json());
+//app.use(express.json);
+
+// app.use(bodyParser.urlencoded({extended: true}));
+// app.use(bodyParser.json());
+
+
 
 
 //Init Server
