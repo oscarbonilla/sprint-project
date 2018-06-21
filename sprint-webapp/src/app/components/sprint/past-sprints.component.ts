@@ -12,7 +12,7 @@ export class PastSprintsComponent implements OnInit {
   totalRecords: number = 0;
   pageSize: number = 10;
 
-  constructor(private sprintServ : SprintService) { 
+  constructor(private sprintService : SprintService) { 
     this.title = 'Past Sprints';
     this.getPastSprints(1);
   }
@@ -21,8 +21,8 @@ export class PastSprintsComponent implements OnInit {
   }
 
   getPastSprints(page: number){
-    this.sprintServ.getPastSprint().subscribe(res => {
-      this.sprintServ.pastsprints = res as PastSprint[];
+    this.sprintService.getPastSprint().subscribe(res => {
+      this.sprintService.pastsprints = res as PastSprint[];
     });
   }
 
