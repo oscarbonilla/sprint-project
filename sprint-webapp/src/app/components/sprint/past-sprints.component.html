@@ -1,0 +1,20 @@
+
+<div class="customers view indent">
+    <div class="container">
+        <header>
+            <h3>
+                <span class="glyphicon glyphicon-user"></span>
+                {{ title }}
+            </h3>
+        </header>
+        <br />       
+    
+       <table>
+         <tr *ngFor="let pastsprint of sprintServ.pastsprints ">
+           <td>{{ pastsprint.name }}</td>
+           <td>{{ pastsprint.duration }}</td>
+         </tr>
+       </table>
+          
+    </div>
+</div>
