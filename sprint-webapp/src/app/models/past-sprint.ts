@@ -1,4 +1,5 @@
-export class PastSprint {
+
+export interface PastSprint {
 
     // constructor(){
     //     this.name = '';

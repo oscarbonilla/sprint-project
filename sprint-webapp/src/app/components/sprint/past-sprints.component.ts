@@ -11,6 +11,7 @@ export class PastSprintsComponent implements OnInit {
   title: string;
   totalRecords: number = 0;
   pageSize: number = 10;
+  sprints : PastSprint[] = [];
 
   constructor(private sprintService : SprintService) { 
     this.title = 'Past Sprints';
@@ -20,9 +21,30 @@ export class PastSprintsComponent implements OnInit {
   ngOnInit() {
   }
 
+  // getPastSprintsTest2(page: number){
+  //   this.sprintService.getPastSprint().subscribe(res => {
+  //     this.sprintService.pastsprints = res as PastSprint[];
+  //     this.sprints = res as PastSprint[];
+  //   });
+  // }
   getPastSprints(page: number){
-    this.sprintService.getPastSprint().subscribe(res => {
-      this.sprintService.pastsprints = res as PastSprint[];
+
+    this.sprintService.getPastSprint().subscribe((response: PastSprint[]) => {
+      this.sprints = response;
+      this.sprintService.pastsprints = response;
+      //console.log('Data retreived: ' + response);
+    });
+  }
+
+  DeleteAll(){
+    //alert('Test DeleteAll')
+    // this.sprintService.deleteAll().subscribe((response: PastSprint[]) => {
+    //   this.sprints = response;
+    //   this.sprintService.pastsprints = response;      
+    // });
+    console.log('Before deleted called: ');
+    this.sprintService.deleteAll().subscribe(res=> {
+      console.log('Result After deleted called: ' + res);
     });
   }
 
