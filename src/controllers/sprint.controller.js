@@ -7,11 +7,14 @@ sprintController.getPastSprints = async function(request, response){
     try{
         
         const sprintList = await sprint.find();        
-        response.setHeader('Access-Control-Allow-Origin', '*');
+        
+        setHeaderResponse(response);      
+        
         response.json(sprintList);
         
 
-        console.log('getPastSprints API requested: Past sprints: ' + util.inspect(sprintList));
+        //console.log('getPastSprints API requested: Past sprints: ' + util.inspect(sprintList));
+        console.log('getPastSprints API requested: Past sprints... ');
         // response.json({
         //     "message" : "getPastSprints API works..."
         // })
@@ -30,7 +33,8 @@ sprintController.createSprint = async (request, response) => {
     try{ 
         const oSprint = new sprint(request.body);
         await oSprint.save();
-        console.log('createSprint API requested: \nSprint Schema created: ', oSprint);
+        //console.log('createSprint API requested: \nSprint Schema created: ', oSprint);
+        console.log('createSprint API requested: \nSprint Schema created: ');
         
         answer = { status: 1, message: "Sprint create successfully...", data: oSprint };
         // response.json({
@@ -41,7 +45,7 @@ sprintController.createSprint = async (request, response) => {
         answer = { status: -1, message: e.message, data: null };
         console.log("Error: " + e.message);        
     }
-    response.setHeader('Access-Control-Allow-Origin', '*');
+    setHeaderResponse(response);      
     response.json(answer.data);
 };
 
@@ -59,10 +63,7 @@ sprintController.deleteAllPastSprints = async function(request, response){
         console.log("Error: " + e.message);        
     }
     
-    response.setHeader('Access-Control-Allow-Origin', '*');    
-    response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    response.setHeader('Access-Control-Allow-Credentials', true);
+    setHeaderResponse(response);      
 
     response.json(answer);
 };
@@ -70,5 +71,13 @@ sprintController.deleteAllPastSprints = async function(request, response){
 sprintController.DeletePastSprintById = (request, response) => {
     sprint.findByIdAndRemove()
 };
+
+const setHeaderResponse = (res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+  }
 
 module.exports = sprintController;

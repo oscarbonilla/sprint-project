@@ -33,7 +33,7 @@ router.post('/test', (request, response) => {
     //     console.log('Test body: ' + body);
     // });
 
-    console.log('Test - Body: ', request.body,'\ntest - Query: ', request.query);
+    //console.log('Test - Body: ', request.body,'\ntest - Query: ', request.query);
 
     response.json({
         "message":"Test - Retreiving the body page..."
@@ -45,6 +45,7 @@ router.post('/test', (request, response) => {
  router.get(mainApiRoute+'/sprints', sprintCtrl.getPastSprints);
  router.post(mainApiRoute+'/sprint', sprintCtrl.createSprint);
  router.delete(mainApiRoute+'/sprints', sprintCtrl.deleteAllPastSprints);
+ router.options(mainApiRoute+'/sprints', sprintCtrl.deleteAllPastSprints);
  
 
 module.exports = router;
