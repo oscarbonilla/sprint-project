@@ -1,8 +1,9 @@
+//const cors = require('cors');
 const express = require('express');
 const morgan = require('morgan');
 const port = 3000;
 const app = express();
-//const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 
 //Db
@@ -17,14 +18,16 @@ app.set('port', process.env.PORT || appConfig.port);
 app.use(require('./routes/sprint-routes'));
 
 //Middlewares
-app.use(morgan('dev'));
 //app.use(express.json);
+//app.use(cors());
 
-// app.use(bodyParser.urlencoded({extended: true}));
-// app.use(bodyParser.json());
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
-
-
+//Init DB Sprint Templates
+const templateController = require('./controllers/sprinttemplate.controller');
+app.get('createTemplates',templateController.createTemplates);
 
 //Init Server
 app.listen(app.get('port'), () => {    

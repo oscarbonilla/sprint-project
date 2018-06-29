@@ -1,0 +1,36 @@
+<!-- <script type="text/javascript" src="node_modules/auth0-js/build/auth0.js"></script> -->
+
+<nav class="navbar navbar-expand-md navbar-default bg-light mb-4" style="font-size: 14px; font-weight: bold;">
+  <!-- <a class="navbar-brand" href="#">Top navbar</a> -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+        <img class="nav-item" src="assets/logo.png" width="70" height="35" alt="Logo"/>
+      <li class="nav-item">          
+        <a class="nav-link" href="/">Home</a>
+        <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
+      </li>        
+    </ul>
+    <ul class="navbar-nav mr-auto">          
+        <li class="nav-item">
+          <a class="nav-link" href="/">≡Sprint</a>
+        </li>          
+      </ul>
+      <ul class="navbar-nav navbar-right">
+          <li class="nav-item" *ngIf="isAuthenticated()">              
+            <a class="nav-link"> {{ username }}</a>               
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="!isAuthenticated()" (click)="LogIn()">Login </a>
+          </li>
+          <li class="nav-item">            
+            <a class="nav-link" *ngIf="isAuthenticated()" (click)="LogOut()" >Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/sprint/pastsprints" *ngIf="isAuthenticated()" >Sprints</a>
+          </li>
+        </ul>      
+  </div>
+</nav>

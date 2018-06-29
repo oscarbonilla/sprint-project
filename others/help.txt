@@ -1,0 +1,5 @@
+Solution to 
+    npm install -g @angular/cli
+    npm ERR! Unexpected end of JSON input while parsing near '...nbul":"latest","jake"'
+
+    command: npm cache clean --force
