@@ -5,7 +5,7 @@
                 <span class="glyphicon glyphicon-user"></span>
                 {{ title }}
             </h3>
-            <button (click)="DeleteAll()">Dellete All</button>
+            <button (click)="DeletePastSpritnsByUser()">Dellete All</button>
         </header>
         <br />
 
@@ -34,9 +34,9 @@
                     <td>{{ ps.description }}</td>
                     <td>{{ ps.notify }}</td>
                     <td>{{ ps.user }}</td>
-                    <td>{{ ps.createdAt }}</td>
-                    <td>{{ ps.startedAt }}</td>
-                    <td>{{ ps.finishedAt }}</td>
+                    <td>{{ ps.createdAt | date:'dd-MM-yyyy HH:mm'  }}</td>
+                    <td>{{ ps.startedAt | date:'HH:mm' }}</td>
+                    <td>{{ ps.finishedAt | date:'HH:mm' }}</td>
                 </tr>
             </table>
         </div>

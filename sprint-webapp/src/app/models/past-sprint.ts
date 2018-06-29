@@ -1,18 +1,15 @@
 
-export interface PastSprint {
-
-    // constructor(){
-    //     this.name = '';
-    // }
+export class PastSprint {    
+    constructor(){}
 
     name :           string; 
-    duration :       string;
+    duration :       number;
     status :         string;
-    progress:        string;
+    progress:        number;
     description:     string;
     notify :         boolean;
     user:            string;
     createdAt:       Date;
-    startedAt:       string;
-    finishedAt:      string
+    startedAt:       Date;
+    finishedAt:      Date
 }

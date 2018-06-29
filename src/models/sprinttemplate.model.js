@@ -4,7 +4,7 @@ const
 
 const sprintTemplate = new Schema({
     name :          { type: String, required: true, trim: true },
-    duration :      { type: String, required: true, trim: true },
+    duration :      { type: Number, required: true, trim: true },
     status :        { type: Boolean }
 });
 

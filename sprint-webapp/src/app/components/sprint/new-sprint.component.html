@@ -1,3 +1,57 @@
-<p>
-  new-sprint works!
-</p>
+<div class="customers view indent">
+  <div class="container">
+    <header>
+      <h3>
+        <span class="glyphicon glyphicon-user"></span>
+        {{ newtitle }}
+      </h3>
+      <button (click)="createPastSprintsByUser()">Create New Sprint</button>
+    </header>
+    <br />
+    <section class="form-light">
+
+      <!--Form without header-->
+      <form action="">
+
+        <div class="card-body mx-4">
+
+          <!--Header-->
+          <div class="text-center">
+            <h3 class="pink-text mb-5">
+              <strong>Start a Sprint</strong>
+            </h3>
+          </div>
+
+          <!--Body-->
+          <div class="md-form">
+            <label class="grey-text">Choose a length*</label>
+            <select class="form-control" required name="length" [disabled]="templates.length===0" [(ngModel)]="selectedTemplate">
+              <option *ngFor="let st of templates" [ngValue]="st">{{ st.name }} - {{st.duration | formatDuration }} </option>
+            </select>
+
+          </div>
+
+          <div class="md-form pb-3">
+            <label class="grey-text">Description</label>
+            <textarea class="form-control" [(ngModel)]="description" name="description" required></textarea>
+            <small id="descriptionHelp" class="form-text text-muted">Insert a description</small>            
+          </div>
+
+          <div class="custom-control custom-checkbox mb-3">
+            <input [(ngModel)]="notify" name="notify" type="checkbox" class="custom-control-input" id="notify">
+            <label class="custom-control-label" for="notify">Notify after complete</label>
+          </div>
+
+          
+          <div class="row d-flex align-items-center mb-4">            
+            <div class="col-md-3 col-md-6 text-center">
+              <button type="button" (click)="createPastSprintsByUser()" class="btn btn-primary btn-block btn-rounded z-depth-1">Start</button>
+            </div>            
+          </div> 
+          
+        </div>
+
+      </form>
+    </section>
+  </div>
+</div>

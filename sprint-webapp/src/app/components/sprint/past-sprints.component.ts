@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SprintService } from '../../services/sprint.service';
 import { PastSprint } from '../../models/past-sprint';
 
@@ -12,21 +13,18 @@ export class PastSprintsComponent implements OnInit {
   totalRecords: number = 0;
   pageSize: number = 10;
   sprints : PastSprint[] = [];
+  username : string = "";
 
-  constructor(private sprintService : SprintService) { 
+  constructor(private sprintService : SprintService,private routeActive: ActivatedRoute,private router: Router) { 
     this.title = 'Past Sprints';
-    this.getPastSprints(1);
+    //this.getPastSprints(1);
+    this.getPastSprintsByUser();
   }
 
   ngOnInit() {
   }
 
-  // getPastSprintsTest2(page: number){
-  //   this.sprintService.getPastSprint().subscribe(res => {
-  //     this.sprintService.pastsprints = res as PastSprint[];
-  //     this.sprints = res as PastSprint[];
-  //   });
-  // }
+  
   getPastSprints(page: number){
 
     this.sprintService.getPastSprint().subscribe((response: PastSprint[]) => {
@@ -36,15 +34,29 @@ export class PastSprintsComponent implements OnInit {
     });
   }
 
-  DeleteAll(){
-    //alert('Test DeleteAll')
-    // this.sprintService.deleteAll().subscribe((response: PastSprint[]) => {
-    //   this.sprints = response;
-    //   this.sprintService.pastsprints = response;      
-    // });
-    console.log('Before deleted called: ');
-    this.sprintService.deleteAll().subscribe(res=> {
-      console.log('Result After deleted called: ' + res);
+  getPastSprintsByUser(){
+    this.username = localStorage.getItem('user');
+    console.log('Retreiving data for: ',this.username);
+    this.sprintService.getPastSprintsByUser(this.username).subscribe((response: PastSprint[]) => {
+      this.sprints = response;
+      this.sprintService.pastsprints = response;      
+    });
+  }
+
+  DeleteAll(){        
+    console.log('Deleting all data');    
+    this.sprintService.deleteAll1().subscribe(res=> {      
+      //this.getPastSprints(1);
+      this.router.navigate(['/sprint/pastsprints']);          
+    });
+  }
+
+  DeletePastSpritnsByUser(){        
+    this.username = localStorage.getItem('user');
+    console.log('Deleting data for: ',this.username);
+
+    this.sprintService.deletePastSprintByUser(this.username).subscribe(res=> {      
+      this.getPastSprintsByUser();
     });
   }
 

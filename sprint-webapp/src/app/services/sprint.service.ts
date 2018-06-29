@@ -11,13 +11,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 import { PastSprint } from '../models/past-sprint';
-import { Options } from 'selenium-webdriver/opera';
-// import { Observable, Subject, ReplaySubject, from, of, range } from 'rxjs';
-// import { map } from 'rxjs/operators';
-
 
 let headers = new HttpHeaders();
-headers.append('Content-Type', 'application/json');
+// headers.append('Content-Type', 'application/json');
 // headers.append('Access-Control-Allow-Origin', '*');
 // headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 // headers.append('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
@@ -43,10 +39,35 @@ export class SprintService {
       .catch(this.handleError);
   }
 
-  deleteAll1():  Observable<PastSprint[]> {
-    return this.http.delete<PastSprint[]>(this.url,options)
+  getPastSprintsByUser(user: String): Observable<PastSprint[]> {
+    return this.http.get<PastSprint[]>(this.url+`/${user}`,options)
       .map((sprints: PastSprint[]) => {
         return sprints;
+      })
+      .catch(this.handleError);
+  }
+
+  deleteAll1():  Observable<PastSprint[]> {
+    return this.http.delete<PastSprint[]>(this.url,options)    
+      .map((sprints: PastSprint[]) => {
+        return sprints;
+      })
+      .catch(this.handleError);
+  }
+
+  deletePastSprintByUser(user: String):  Observable<PastSprint[]> {
+    //console.log('Sprint service:', user);
+    return this.http.delete<PastSprint[]>(this.url+`/${user}`,options)
+      .map((sprints: PastSprint[]) => {
+        return sprints;
+      })
+      .catch(this.handleError);
+  }
+
+  createPastSprint(pastsprint: PastSprint):  Observable<PastSprint> {    
+    return this.http.post<PastSprint>(this.url, pastsprint, options)
+      .map((sprint: PastSprint) => {
+        return sprint;
       })
       .catch(this.handleError);
   }
@@ -65,10 +86,6 @@ export class SprintService {
       //return Observable.throw(err.text() || 'backend server error');
     }
     return Observable.throw(error || 'Node.js server error');
-  }
-
-  // getPastSprintTest1() : Observable<any>{
-  //   return this.http.get(this.url, {responseType: 'json'});
-  // }
+  } 
 
 }

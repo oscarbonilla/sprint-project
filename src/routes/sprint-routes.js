@@ -8,8 +8,9 @@ router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
 
 const configRoutes = require('../libs/configLoader').apiRoutesConfig;
-const mainApiRoute = configRoutes.api;
+const mainApiRoute = configRoutes.apiSprints
 const sprintCtrl = require('../controllers/sprint.controller');
+const templateCtrl = require('../controllers/sprinttemplate.controller');
 
 let msg = "Welcome page!";
 //About Page
@@ -21,31 +22,30 @@ router.get('/', (request, response) => {
         "message":msg
     })
 });
-router.post('/test', (request, response) => {
-    //response.send("Welcome page!");    
-
-    // let body = '';
-    // request.on('data',chunk => {         
-    //     body += chunk.toString();
-    //     console.log('Body: ' + body);
-    // });
-    // request.on('end',() => { 
-    //     console.log('Test body: ' + body);
-    // });
-
-    //console.log('Test - Body: ', request.body,'\ntest - Query: ', request.query);
+router.post('/test', (request, response) => {    
+    console.log('Test - Body: ', request.body);
 
     response.json({
         "message":"Test - Retreiving the body page..."
     })
 });
 
-//Sprint pages
-//router.get(mainApiRoute+'/');
- router.get(mainApiRoute+'/sprints', sprintCtrl.getPastSprints);
- router.post(mainApiRoute+'/sprint', sprintCtrl.createSprint);
- router.delete(mainApiRoute+'/sprints', sprintCtrl.deleteAllPastSprints);
- router.options(mainApiRoute+'/sprints', sprintCtrl.deleteAllPastSprints);
+//Past Sprint
+ router.get(mainApiRoute, sprintCtrl.getPastSprints);
+ router.post(mainApiRoute, sprintCtrl.createSprint); 
+ router.options(mainApiRoute, sprintCtrl.ManageOptionMethod);
+ router.delete(mainApiRoute, sprintCtrl.deleteAllPastSprints); 
+ 
+ router.get(mainApiRoute + '/:user', sprintCtrl.getPastSprintsByUser); 
+ router.delete(mainApiRoute + '/:user', sprintCtrl.deletePastSprintsByUser);
+ router.options(mainApiRoute + '/:user', sprintCtrl.ManageOptionMethod);
+  
+
+ //Sprint Templates
+ router.get('/api/templates', templateCtrl.getSprintTemplates); 
+ router.post('/api/templates', templateCtrl.createTemplates); 
+ router.delete('/api/templates', templateCtrl.deleteTemplates); 
+ 
  
 
 module.exports = router;

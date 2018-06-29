@@ -5,10 +5,11 @@
     },
     "databaseConfig": {
         "host": "localhost",
-        "database": "sprint-project-db",
+        "database": "sprintdb",
         "port": 27017
     },
     "apiRoutesConfig": {
-        "api" : "/api"
+        "api" : "/api",
+        "apiSprints" : "/api/sprints"
     }
 }
