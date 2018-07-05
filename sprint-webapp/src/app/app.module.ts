@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './shared/app.routing';
@@ -12,6 +14,8 @@ import { NewSprintComponent } from './components/sprint/new-sprint.component';
 import { PastSprintsComponent } from './components/sprint/past-sprints.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FormatDurationPipe } from './customfilters/format-duration.pipe';
+import { SpinnerComponent } from './components/sprint/spinner.component';
+import { AutofocusDirective } from './shared/autofocus.directive';
 
 
 @NgModule({
@@ -22,13 +26,16 @@ import { FormatDurationPipe } from './customfilters/format-duration.pipe';
     NewSprintComponent,
     PastSprintsComponent,
     HeaderComponent,
-    FormatDurationPipe
+    FormatDurationPipe,
+    SpinnerComponent,
+    AutofocusDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

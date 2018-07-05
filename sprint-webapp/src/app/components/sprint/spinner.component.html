@@ -1,0 +1,71 @@
+<div class="view indent">
+  <div class="container">
+    <header>
+      <h3>
+        <span class="glyphicon glyphicon-user"></span>
+        {{ newtitle }}
+      </h3>
+    </header>
+    <br />
+    <b>Name:</b> {{name}} ({{duration | formatDuration}})    
+    <br>
+    <svg height="200" width="200">
+      <circle id="_cir_P_x" cx="100" cy="100" [attr.r]="radius" stroke="#004C70" stroke-width="20" fill="white"></circle>
+      <circle id="_cir_P_y" cx="100" cy="100" [attr.r]="radius" stroke="#009900" stroke-width="20" [style.strokeDasharray]="circumference"
+        fill="none" [style.strokeDashoffset]="dashoffset"></circle>
+      <text x="50%" y="50%" text-anchor="middle" stroke="none" stroke-width="1px" dy=".3em" id="_cir_Per" style="font-size:12px;font-weight: bold;">
+        <tspan x="100" y="90">{{ curPerc }}</tspan>
+        <tspan x="100" y="110">{{ Fulltime }}</tspan>
+      </text>
+    </svg>
+
+
+    <button type="button" [disabled]="completed" (click)="stopSpinner()" class="btn btn-danger btn-block btn-rounded" style="width: 200px;">Stop</button>
+    <br>
+    <div class="alert alert-danger" role="alert" [ngStyle]="{'display':showErrorMessage}">
+      An error ocurred when creating the record!
+    </div>
+
+    <!-- Modal for Sprint Confirmation -->
+    <div class="backdrop" [ngStyle]="{'display':showModal}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':showModal}">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h4>On hold. Cancel sprint?</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" (click)="cancelSpinner()" class="btn btn-danger btn-rounded" style="width: 50px;">Yes</button>
+            <button type="button" [appAutofocus]="true" (click)="restartSpinner()" class="btn btn-success btn-rounded" style="width: 50px;">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Sprint Finished -->
+    <div class="backdrop" [ngStyle]="{'display':showFinalModal}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':showFinalModal}">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h3>The sprint is completed!</h3>
+            <br>
+            <b>{{name}} ({{duration | formatDuration}})</b>
+            <br>
+            <br>
+            <b>Started:</b> {{started | date:'dd-MM-yyyy HH:mm:ss'}}
+            <br>
+            <b>Finished:</b> {{finished | date:'dd-MM-yyyy HH:mm:ss'}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" autofocus [appAutofocus]="true" (click)="ok()" class="btn btn-success btn-rounded" style="width: 50px;">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <button style="display: none" (click)="start()">start</button>
+    <button style="display: none" (click)="stop()">stop</button>
+    <button style="display: none" (click)="reset()">reset</button> -->
+
+  </div>

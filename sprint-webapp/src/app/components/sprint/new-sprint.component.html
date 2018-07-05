@@ -5,13 +5,16 @@
         <span class="glyphicon glyphicon-user"></span>
         {{ newtitle }}
       </h3>
-      <button (click)="createPastSprintsByUser()">Create New Sprint</button>
+      <!-- <button (click)="createPastSprintsByUser()">Create New Sprint</button> -->
     </header>
     <br />
     <section class="form-light">
 
       <!--Form without header-->
-      <form action="">
+      <!-- <form action=""> -->
+      <!-- <form action="" (submit)="onAddPost(postForm)" #postForm="ngForm"> -->
+      <!-- <form name="form" (ngSubmit)="onSubmit(newsprintForm)" #newsprintForm="ngForm" novalidate> -->
+      <form name="form" (ngSubmit)="createSpinner(newsprintForm)" #newsprintForm="ngForm">
 
         <div class="card-body mx-4">
 
@@ -28,7 +31,9 @@
             <select class="form-control" required name="length" [disabled]="templates.length===0" [(ngModel)]="selectedTemplate">
               <option *ngFor="let st of templates" [ngValue]="st">{{ st.name }} - {{st.duration | formatDuration }} </option>
             </select>
-
+            <div *ngIf="!selectedTemplate" class="invalid-feedback">
+                <div>Choose a lenght is required</div>
+            </div>
           </div>
 
           <div class="md-form pb-3">
@@ -42,16 +47,45 @@
             <label class="custom-control-label" for="notify">Notify after complete</label>
           </div>
 
-          
-          <div class="row d-flex align-items-center mb-4">            
-            <div class="col-md-3 col-md-6 text-center">
-              <button type="button" (click)="createPastSprintsByUser()" class="btn btn-primary btn-block btn-rounded z-depth-1">Start</button>
-            </div>            
-          </div> 
-          
-        </div>
 
+          <div class="row d-flex align-items-center mb-4">
+            <div class="col-md-12 text-center">
+              <!-- <button type="button" (click)="createPastSprintsByUser()" class="btn btn-primary btn-block btn-rounded z-depth-1">Start</button> -->
+              <button type="submit" [disabled]="!newsprintForm.form.valid" class="btn btn-primary btn-block btn-rounded z-depth-1">Start</button>
+              
+            </div>
+          </div>
+
+        </div>
       </form>
     </section>
   </div>
-</div>
+
+
+  <!-- <button type="button" class="btn btn-info btn-lg" (click)="openModal()">click to open 2</button>
+
+
+  <div class="backdrop" [ngStyle]="{'display':display}"></div> -->
+
+  <!-- Modal section -->
+  
+
+  <!-- <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Model Title</h4>
+        </div>
+        <div class="modal-body">
+          <app-spinner></app-spinner>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="cancelSpinner()">Close</button>
+        </div>
+      </div>      
+    </div>
+    </div> -->
+  

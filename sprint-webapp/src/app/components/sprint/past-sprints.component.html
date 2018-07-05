@@ -4,8 +4,8 @@
             <h3>
                 <span class="glyphicon glyphicon-user"></span>
                 {{ title }}
-            </h3>
-            <button (click)="DeletePastSpritnsByUser()">Dellete All</button>
+            </h3>            
+            <button type="button" [disabled]="sprintService.pastsprints.length==0" (click)="DeletePastSpritnsByUser()" class="btn btn-danger btn-block btn-rounded" style="width: 100px;">Dellete All</button>
         </header>
         <br />
 
@@ -14,12 +14,12 @@
                 <thead>
                     <tr>
                         <th>name</th>
-                        <th>duration</th>
+                        <!-- <th>duration</th> -->
                         <th>status</th>
-                        <th>progress</th>
+                        <!-- <th>progress</th> -->
                         <th>description</th>
                         <th>notify</th>
-                        <th>user</th>
+                        <!-- <th>user</th> -->
                         <th>createdAt</th>
                         <th>startedAt</th>
                         <th>finishedAt</th>
@@ -27,16 +27,16 @@
                 </thead>
 
                 <tr *ngFor="let ps of sprintService.pastsprints ">
-                    <td>{{ ps.name }}</td>
-                    <td>{{ ps.duration }}</td>
+                    <td>{{ ps.name }} ({{ ps.duration | formatDuration }})</td>
+                    <!-- <td>{{ ps.duration | formatDuration }}</td> -->
                     <td>{{ ps.status }}</td>
-                    <td>{{ ps.progress }}</td>
+                    <!-- <td>{{ ps.progress }}</td> -->
                     <td>{{ ps.description }}</td>
                     <td>{{ ps.notify }}</td>
-                    <td>{{ ps.user }}</td>
+                    <!-- <td>{{ ps.user }}</td> -->
                     <td>{{ ps.createdAt | date:'dd-MM-yyyy HH:mm'  }}</td>
-                    <td>{{ ps.startedAt | date:'HH:mm' }}</td>
-                    <td>{{ ps.finishedAt | date:'HH:mm' }}</td>
+                    <td>{{ ps.startedAt | date:'HH:mm:ss' }}</td>
+                    <td>{{ ps.finishedAt | date:'HH:mm:ss' }}</td>
                 </tr>
             </table>
         </div>
