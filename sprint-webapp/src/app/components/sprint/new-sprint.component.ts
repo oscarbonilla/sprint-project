@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SprintService } from '../../services/sprint.service';
 import { SprinttemplateService } from '../../services/sprinttemplate.service';
 import { NgForm } from '@angular/forms';
+import { AuthServiceService } from '../../services/auth-service.service'
 
 import { PastSprint } from '../../models/past-sprint';
 import { SprintTemplate } from '../../models/sprint-template'
@@ -32,11 +33,20 @@ export class NewSprintComponent implements OnInit {
   public selectedValue: any = '';
 
 
-  constructor(private sprintService: SprintService, private templateService: SprinttemplateService, private routeActive: ActivatedRoute, private router: Router) {
+  constructor(
+    private sprintService: SprintService, 
+    private templateService: SprinttemplateService, 
+    private routeActive: ActivatedRoute, 
+    private router: Router,
+    private authService: AuthServiceService
+  ) {
     this.newtitle = 'New Sprint';    
   }
 
   ngOnInit() {
+    if(!this.authService.isAuthenticated()){
+      this.router.navigate(['/']);
+    }
     this.username = localStorage.getItem('user');
     this.getTemplates();
   }

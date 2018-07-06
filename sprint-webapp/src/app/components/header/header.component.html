@@ -19,17 +19,17 @@
         </li>          
       </ul>
       <ul class="navbar-nav navbar-right">
-          <li class="nav-item" *ngIf="isAuthenticated()">              
+          <li class="nav-item" *ngIf="auth.isAuthenticated()">              
             <a class="nav-link"> {{ username }}</a>               
           </li>
           <li class="nav-item">
-            <a class="nav-link" *ngIf="!isAuthenticated()" (click)="LogIn()">Login </a>
+            <a class="nav-link" *ngIf="!auth.isAuthenticated()" (click)="auth.login()">Login </a>
           </li>
           <li class="nav-item">            
-            <a class="nav-link" *ngIf="isAuthenticated()" (click)="LogOut()" >Logout</a>
+            <a class="nav-link" *ngIf="auth.isAuthenticated()" (click)="auth.logout()" >Logout</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/sprint/pastsprints" *ngIf="isAuthenticated()" >Sprints</a>
+            <a class="nav-link" routerLink="/sprint/pastsprints" *ngIf="auth.isAuthenticated()" >Sprints</a>
           </li>
         </ul>      
   </div>

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PushNotificationsModule } from 'ng-push';
 
 
 import { AppComponent } from './app.component';
@@ -35,7 +36,8 @@ import { AutofocusDirective } from './shared/autofocus.directive';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    PushNotificationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,14 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { PastSprint } from '../../models/past-sprint';
 import { SprintService } from '../../services/sprint.service';
-
-// import { SprintTemplate } from '../../models/sprint-template'
-// import { Observable } from 'rxjs/Observable';
-// import { interval } from 'rxjs';
-// import { map } from 'rxjs/operators'
-// import { forEach } from '@angular/router/src/utils/collection';
-// import {PushNotificationsModule, PushNotificationsService } from 'ng-push';
-
+import {PushNotificationsModule, PushNotificationsService } from 'ng-push';
+import { AuthServiceService } from '../../services/auth-service.service'
 
 
 @Component({
@@ -45,7 +39,13 @@ export class SpinnerComponent implements OnInit {
   showErrorMessage = 'none';
 
 
-  constructor(private routeActive: ActivatedRoute,private router: Router, private sprintservice: SprintService ) {
+  constructor(
+    private routeActive: ActivatedRoute,
+    private router: Router, 
+    private sprintservice: SprintService, 
+    private pushNotifications: PushNotificationsService,
+    private authService: AuthServiceService
+  ) {
     this.setProgress(0);
     this.percentage = 0;
     this.Fulltime = "00:00:00";
@@ -54,9 +54,13 @@ export class SpinnerComponent implements OnInit {
 
 
   ngOnInit() {
+    if(!this.authService.isAuthenticated()){
+      this.router.navigate(['/']);
+    }
+    this.pushNotifications.requestPermission();
     this.routeActive.queryParams.subscribe(params => {      
       this.description = params['description'];
-      this.notify = params['notify'];
+      this.notify = params['notify']==='true';
       this.name = params['lengthName'];
       this.duration = params['lengthDuration'];
       this.Fulltime = "00:00:00";
@@ -72,7 +76,7 @@ export class SpinnerComponent implements OnInit {
     const progress = value / 100;
     this.dashoffset = this.circumference * (1 - progress);
   }
-
+  
   setTime() {
 
     let hours = 0 //timeNow.getHours();
@@ -112,6 +116,9 @@ export class SpinnerComponent implements OnInit {
       this.completed = true;
       this.status = "Completed";
       this.stop();
+      if(this.notify){        
+        this.sendNotification();
+      }
     }
 
   }
@@ -206,6 +213,22 @@ export class SpinnerComponent implements OnInit {
       }
     });
   }
+
+  sendNotification() {
+    const options = {
+        body: `Your sprint has ended.`,
+        icon: '../assets/logo.png'
+    };
+
+    this.pushNotifications.create('Timeout!', options)
+        .subscribe(res => {
+            if (res.event.type === 'click') {
+                res.notification.close();
+
+            }
+
+        });
+}
 
 
   reset() {
