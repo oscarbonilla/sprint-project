@@ -4,6 +4,7 @@ import { SprintComponent } from '../components/sprint/sprint.component';
 import { PastSprintsComponent } from '../components/sprint/past-sprints.component';
 import { NewSprintComponent } from '../components/sprint/new-sprint.component';
 import { AboutComponent } from '../components/about/about.component';
+import { SpinnerComponent } from '../components/sprint/spinner.component';
 
 const routes: Routes = [
     {
@@ -14,6 +15,7 @@ const routes: Routes = [
             { path: 'newsprint', component: NewSprintComponent }
          ]
     },    
+    { path: 'spinner', component: SpinnerComponent },
     { path: 'about', component: AboutComponent }
     , { path: '', redirectTo: '/about', pathMatch: 'full'}
   ];

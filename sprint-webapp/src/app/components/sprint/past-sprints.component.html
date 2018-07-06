@@ -5,40 +5,144 @@
                 <span class="glyphicon glyphicon-user"></span>
                 {{ title }}
             </h3>
-            <button (click)="DeletePastSpritnsByUser()">Dellete All</button>
+            <button type="button" [disabled]="sprintService.pastsprintsFiltered.length==0" (click)="DeletePastSpritnsByUser()" class="btn btn-danger btn-block btn-rounded"
+                style="width: 100px;">Dellete All</button>
+            <br>
+            <div class="inputSearch">
+                <input type="text" #search (keyup)="searchPastSprint(search.value)" class="form-control" placeholder="Filter by name, status, date or description">
+                <!-- Text inserted: {{ SearchText }} -->
+            </div>
+
         </header>
         <br />
+
+        <h5>Total records: {{TotalRecords}}</h5>
+
+        <table border="0" style="width: 100%;height: auto;">
+            <tr>
+                <td style="text-align: right; width: 100%">
+                    <!-- pager -->
+                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                            <a (click)="setPage(1)">First</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                            <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+                        </li>
+                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                            <a (click)="setPage(page)">{{page}}</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                            <a (click)="setPage(pager.currentPage + 1)">Next</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                            <a (click)="setPage(pager.totalPages)">Last</a>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <div class="btn-group mr-2" role="group" aria-label="First group" title="Items per page">
+                        <button type="button" class="btn btn-secondary" (click)="ItemsPage = 5; setPage(1);" [disabled]="ItemsPage == 5 || sprintService.pastsprintsFiltered.length==0">5</button>
+                        <button type="button" class="btn btn-secondary" (click)="ItemsPage = 10; setPage(1);" [disabled]="ItemsPage == 10 || sprintService.pastsprintsFiltered.length==0">10</button>
+                        <button type="button" class="btn btn-secondary" (click)="ItemsPage = 20; setPage(1);" [disabled]="ItemsPage == 20 || sprintService.pastsprintsFiltered.length==0">20</button>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
 
         <div class="table">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>name</th>
-                        <th>duration</th>
+                        <!-- <th>duration</th> -->
                         <th>status</th>
-                        <th>progress</th>
+                        <!-- <th>progress</th> -->
                         <th>description</th>
                         <th>notify</th>
-                        <th>user</th>
+                        <!-- <th>user</th> -->
                         <th>createdAt</th>
                         <th>startedAt</th>
                         <th>finishedAt</th>
                     </tr>
                 </thead>
-
-                <tr *ngFor="let ps of sprintService.pastsprints ">
-                    <td>{{ ps.name }}</td>
-                    <td>{{ ps.duration }}</td>
-                    <td>{{ ps.status }}</td>
-                    <td>{{ ps.progress }}</td>
+                <!-- <div style="overflow:scroll;height:80px;width:100%;overflow:auto"> -->
+                <tr *ngFor="let ps of sprintService.pastsprintsFiltered ">
+                    <td style="width: 150px;">{{ ps.name }} ({{ ps.duration | formatDuration }})</td>
+                    <!-- <td>{{ ps.duration | formatDuration }}</td> -->
+                    <td style="width: 150px;">{{ ps.status }}</td>
+                    <!-- <td>{{ ps.progress }}</td> -->
                     <td>{{ ps.description }}</td>
                     <td>{{ ps.notify }}</td>
-                    <td>{{ ps.user }}</td>
-                    <td>{{ ps.createdAt | date:'dd-MM-yyyy HH:mm'  }}</td>
-                    <td>{{ ps.startedAt | date:'HH:mm' }}</td>
-                    <td>{{ ps.finishedAt | date:'HH:mm' }}</td>
+                    <!-- <td>{{ ps.user }}</td> -->
+                    <td>{{ ps.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                    <td>{{ ps.startedAt | date:'HH:mm:ss' }}</td>
+                    <td>{{ ps.finishedAt | date:'HH:mm:ss' }}</td>
                 </tr>
+
             </table>
+
         </div>
+
+        <table border="0" style="width: 100%;height: auto;">
+            <tr>
+                <td style="text-align: right; width: 100%">
+                    <!-- pager -->
+                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                            <a (click)="setPage(1)">First</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                            <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+                        </li>
+                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                            <a (click)="setPage(page)">{{page}}</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                            <a (click)="setPage(pager.currentPage + 1)">Next</a>
+                        </li>
+                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                            <a (click)="setPage(pager.totalPages)">Last</a>
+                        </li>
+                    </ul>
+                </td>
+                <td style="text-align: right;">
+                    <!-- <ul class="pagination" title="Items per page">
+                        <li>
+                            <a>5</a>
+                        </li>
+                        <li>
+                            <a>10</a>
+                        </li>
+                        <li>
+                            <a>20</a>
+                        </li>
+                    </ul>  -->
+                    <div class="btn-group mr-2" role="group" aria-label="First group" title="Items per page">
+                        <button type="button" class="btn btn-secondary" (click)="ItemsPage = 5; setPage(1);" [disabled]="ItemsPage == 5 || sprintService.pastsprintsFiltered.length==0">5</button>
+                        <button type="button" class="btn btn-secondary" (click)="ItemsPage = 10; setPage(1);" [disabled]="ItemsPage == 10 || sprintService.pastsprintsFiltered.length==0">10</button>
+                        <button type="button" class="btn btn-secondary" (click)="ItemsPage = 20; setPage(1);" [disabled]="ItemsPage == 20 || sprintService.pastsprintsFiltered.length==0">20</button>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+
+        <div class="row" style="width: 100%;">
+            <div class="col">
+
+            </div>
+            <div class="col">
+
+                <!-- <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-secondary">5</button>
+                        <button type="button" class="btn btn-secondary">10</button>
+                        <button type="button" class="btn btn-secondary">20</button> 
+                    </div> -->
+            </div>
+        </div>
+
     </div>
+
 </div>

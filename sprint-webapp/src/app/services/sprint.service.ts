@@ -28,6 +28,7 @@ let options = ({ headers: headers });
 export class SprintService {
   readonly url = 'http://localhost:3000/api/sprints';
   pastsprints: PastSprint[] = [];
+  pastsprintsFiltered: PastSprint[] = [];
 
   constructor(private http: HttpClient) { }
 
