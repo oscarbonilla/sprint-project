@@ -37,7 +37,11 @@ export class PastSprintsComponent implements OnInit {
     
   }
 
-  ngOnInit() {    
+  ngOnInit() {  
+    const ipp = localStorage.getItem('ItemsPerPage');
+    if(ipp && parseInt(ipp)>0){
+      this.setItemsPerPage(parseInt(ipp));
+    }
   }
 
   
@@ -61,6 +65,10 @@ export class PastSprintsComponent implements OnInit {
       this.pastSprintTemp = this.sprintService.pastsprints;
     }
 
+    this.pastSprintTemp = this.pastSprintTemp.sort((a,b)=>{
+      return  new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    })
+
     this.TotalRecords = this.pastSprintTemp.length;
 
     // get pager object from service    
@@ -68,7 +76,10 @@ export class PastSprintsComponent implements OnInit {
 
     // get current page of items
     this.sprintService.pastsprintsFiltered = this.pastSprintTemp.slice(this.pager.startIndex, this.pager.endIndex + 1);
+
   }
+
+    
 
   convertDuration(value: any): string {
     return value > 60 ? value / 60 + ' Minutes' : value + ' Seconds'
@@ -136,6 +147,12 @@ export class PastSprintsComponent implements OnInit {
     this.sprintService.deletePastSprintByUser(this.username).subscribe(res => {
       this.getPastSprintsByUser();
     });
+  }
+
+  setItemsPerPage(number){
+    this.ItemsPage = number; 
+    this.setPage(1);
+    localStorage.setItem("ItemsPerPage",this.ItemsPage.toString());
   }
 
 }
