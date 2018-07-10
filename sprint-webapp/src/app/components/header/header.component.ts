@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import * as auth0  from 'auth0-js'
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import * as auth0 from 'auth0-js'
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../../services/auth-service.service'
+
 
 (window as any).global = window;
 
@@ -10,21 +11,23 @@ import { AuthServiceService } from '../../services/auth-service.service'
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit {  
+  @ViewChild('userlink') userlink: ElementRef;
 
-  username = ''
+  username = '';
   authenticated: boolean = false;
-
-  constructor(private router: Router,public auth: AuthServiceService) { 
-    //this.handleAuthentication();    
+  to;
+  constructor(private router: Router, public auth: AuthServiceService) {
     auth.handleAuthentication();
   }
 
   ngOnInit() {
-    //console.log('Header OnInit.......');    
     this.username = localStorage.getItem('user');
   }
-
-  
- 
+  ngAfterViewInit() {    
+    this.username = localStorage.getItem('user');
+    if(this.userlink){
+      this.userlink.nativeElement.innerHTML = this.username;
+     }    
+  }
 }

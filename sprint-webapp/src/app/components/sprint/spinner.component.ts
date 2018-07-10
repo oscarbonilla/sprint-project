@@ -20,7 +20,7 @@ export class SpinnerComponent implements OnInit {
   duration = 0;
   notify: boolean = false;
   newtitle = "New Sprint";
-  radius = 60;
+  radius = 110;
   circumference = 2 * Math.PI * this.radius;
   dashoffset: number;
   percentage: number = 0;
@@ -93,7 +93,6 @@ export class SpinnerComponent implements OnInit {
     seconds = remSec - (hours * 3600 + minutes * 60);
     seconds = parseInt(seconds.toString());
 
-    //let timeString = "" + ((hours > 12) ? hours - 12 : hours);
     let timeString = ""
     timeString += ((hours < 10) ? "0" : ":") + hours;
     timeString += ((minutes < 10) ? ":0" : ":") + minutes;
@@ -126,8 +125,7 @@ export class SpinnerComponent implements OnInit {
 
   start() {
     if(!this.completed){
-      this.interval = setInterval(() => {
-        //this.Fulltime = this.getNewTime();      
+      this.interval = setInterval(() => {        
         this.setTime();
         this.setPercentage();
         this.counter++;  
@@ -139,11 +137,9 @@ export class SpinnerComponent implements OnInit {
     }    
   }
 
-  stop() {
-    //clearInterval(this.interval);
-    //this.curTime=0;
-    //this.stopSpinner()
-    this.clearTimer();
+  
+  stop() {    
+    this.clearTimer();    
     this.finished = new Date();
     this.showFinalMessage();    
   }
@@ -152,7 +148,7 @@ export class SpinnerComponent implements OnInit {
     if (this.timers && this.timers.length > 0) {
       this.timers.forEach(function(value,key){
         console.log('Array Value:',value,'- Key:',key)
-        clearInterval(value);
+        clearTimeout(value);
       })
       this.timers = [];     
     }

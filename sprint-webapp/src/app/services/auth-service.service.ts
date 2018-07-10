@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
+//import { HeaderComponent } from '../components/header/header.component'
 
 (window as any).global = window;
 
@@ -18,10 +19,13 @@ export class AuthServiceService {
     scope: 'openid profile'
   });
 
+  userconnected = '';
+
   constructor(private router: Router) { }
 
-  public login(): void{    
+  public login(): void {
     this.auth0.authorize();
+    console.log('Auth service: setSession: User connected:', this.userconnected);
   }
 
   public handleAuthentication(): void {
@@ -44,13 +48,19 @@ export class AuthServiceService {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
     localStorage.setItem('user', authResult.idTokenPayload.name);
+    this.userconnected = authResult.idTokenPayload.name;
+    console.log('Auth service: setSession: User connected:', this.userconnected);
   }
 
   public logout(): void {
     // Remove tokens and expiry time from localStorage
+    this.userconnected = localStorage.getItem('user');
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('user');
+
+    console.log('Auth service: logout: User deconnected:', this.userconnected);
     // Go back to the home route
     this.router.navigate(['/']);
   }
@@ -61,4 +71,9 @@ export class AuthServiceService {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
     return new Date().getTime() < expiresAt;
   }
+
+  public getUser() {
+    return localStorage.getItem('user');
+  }
+
 }
